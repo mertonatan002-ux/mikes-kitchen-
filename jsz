@@ -1,0 +1,40 @@
+import { useState } from "react";
+import { motion } from "framer-motion";
+import "./index.css";
+
+const foods = [
+  { id: 1, name: "Jollof Rice", price: 3500, category: "Rice", emoji: "🍛" },
+  { id: 2, name: "Fried Rice", price: 4000, category: "Rice", emoji: "🍚" },
+  { id: 3, name: "Ofada Rice", price: 4500, category: "Rice", emoji: "🍲" },
+  { id: 4, name: "Amala & Ewedu", price: 4500, category: "Swallow", emoji: "🥘" },
+  { id: 5, name: "Egusi & Pounded Yam", price: 5000, category: "Swallow", emoji: "🍲" },
+  { id: 6, name: "Efo Riro", price: 4000, category: "Swallow", emoji: "🥣" },
+  { id: 7, name: "Grilled Chicken", price: 5500, category: "Grills", emoji: "🍗" },
+  { id: 8, name: "Small Chops", price: 3000, category: "Snacks", emoji: "🍢" }
+];
+
+export default function App() {
+  const [cart, setCart] = useState([]);
+  const [category, setCategory] = useState("All");
+  const [search, setSearch] = useState("");
+
+  const addToCart = (food) => {
+    setCart([...cart, food]);
+  };
+
+  const removeFromCart = (index) => {
+    setCart(cart.filter((_, i) => i !== index));
+  };
+
+  const total = cart.reduce((sum, item) => sum + item.price, 0);
+
+  const filteredFoods = foods.filter(food =>
+    (category === "All" || food.category === category) &&
+    food.name.toLowerCase().includes(search.toLowerCase())
+  );
+
+  return (
+    <div>
+      <nav className="navbar">
+        <h2>MIKE'S KITCHEN</h2>
+        <a href="#menu">Our Menu</a>
